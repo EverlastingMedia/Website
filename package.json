@@ -1,0 +1,41 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "vite --host",
+    "build:dev": "tsc && vite build && npm run copy-files",
+    "build:production": "npm run build:dev && node plugins/build-production.mjs",
+    "serve": "vite preview",
+    "copy-files": "node plugins/create-dist.mjs & copy-files-from-to",
+    "pack-gltf": "npm run transform --prefix node_modules/@needle-tools/gltf-transform-extensions"
+  },
+  "dependencies": {
+    "@needle-tools/engine": "latest",
+    "three": "npm:@needle-tools/three@latest"
+  },
+  "devDependencies": {
+    "@needle-tools/helper": "latest",
+    "@needle-tools/gltf-transform-extensions": "latest",
+    "@needle-tools/needle-component-compiler": "^2.3.0-pre",
+    "@types/three": "^0.134.0",
+    "@vitejs/plugin-basic-ssl": "^0.1.2",
+    "copy-files-from-to": "^3.2.2",
+    "typescript": "^4.5.5",
+    "vite": "^3.1.4",
+    "vite-plugin-compression": "^0.5.1"
+  },
+  "copyFiles": [
+    {
+      "from": "assets/**/*.*",
+      "to": "dist/assets/"
+    },
+    {
+      "from": "node_modules/@needle-tools/engine/src/include/**/*.*",
+      "to": "./include/"
+    },
+    {
+      "from": "include/**/*.*",
+      "to": "dist/include/"
+    }
+  ]
+}
